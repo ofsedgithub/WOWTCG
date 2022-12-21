@@ -16,13 +16,12 @@ class main:
         pygame.display.set_caption("WOWTCG")
         pygame.display.update()
 
-    def start(self):
+    def start(self) -> 0 or 1:
         pygame.time.Clock().tick(60)
         self.screen.blit(self.image, (0, 0))
         pygame.display.update()
         for i in pygame.event.get():
             if i.type == pygame.MOUSEBUTTONDOWN:
-                self.main_loop()
                 return 1
             else:
                 del i
@@ -31,8 +30,18 @@ class main:
     def main_loop(self):
         while True:
             pygame.time.Clock().tick(60)
-            self.screen.fill((0, 0, 0))
+            self.screen.fill((255, 255, 255))
             pygame.display.update()
+            self.check_event()
+
+    @staticmethod
+    def check_event():
+        for i in pygame.event.get():
+            if i.type == pygame.KEYDOWN:
+                if i.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    from sys import exit
+                    exit()
 
 
 if __name__ == '__main__':
@@ -40,3 +49,4 @@ if __name__ == '__main__':
     status = 0
     while status != 1:
         status = game.start()
+    game.main_loop()
